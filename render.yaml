@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: credit-risk-ml-system
+    runtime: python
+    plan: free
+    region: singapore          # closest to India; change if you prefer
+    branch: main               # branch Render deploys from
+    autoDeployTrigger: commit  # redeploy on every push
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9          # use the same Python version you trained the model with

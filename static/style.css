@@ -1,0 +1,58 @@
+:root{
+  --paper:#EDF1F5; --panel:#fff; --ink:#14212E; --muted:#5B6B7A; --line:#D3DAE2;
+  --accent:#1D5C8C; --field:#F7F9FB;
+  --r-panel:16px; --r-field:8px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#0E151C;--panel:#16212B;--ink:#E7EDF3;--muted:#98A7B5;--line:#2A3946;--accent:#6FB1E0;--field:#101923}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.5 "Figtree",system-ui,sans-serif;padding:max(24px,env(safe-area-inset-top)) 20px 48px}
+.shell{max-width:1060px;margin:0 auto}
+header{padding:20px 0 28px}
+h1{font:700 clamp(2rem,4.5vw,3rem)/1.05 "Bricolage Grotesque","Figtree",sans-serif;letter-spacing:-.02em;margin:0 0 8px}
+header p{margin:0;color:var(--muted);max-width:52ch}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-panel);padding:8px 28px 28px}
+fieldset{border:0;margin:0;padding:22px 0 6px;display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+fieldset+fieldset{border-top:1px solid var(--line)}
+legend{float:left;width:100%;padding:0;margin:0 0 4px;font:600 1.15rem/1.2 "Bricolage Grotesque",sans-serif}
+legend+*{clear:left}
+label,.field{display:flex;flex-direction:column;gap:6px;font-size:.9rem;font-weight:500;color:var(--muted)}
+input,select{font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:var(--r-field);padding:10px 12px;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible,.seg input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+input:invalid.touched{border-color:#C4452D}
+.calc{grid-column:1/-1;font-size:.92rem;color:var(--muted)}
+.calc strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.seg{display:flex;border:1px solid var(--line);border-radius:var(--r-field);overflow:hidden;background:var(--field)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1;text-align:center;padding:10px 12px;cursor:pointer;color:var(--ink);transition:background .15s,color .15s}
+.seg input:checked+label{background:var(--accent);color:#fff}
+.seg input:checked+label[for="def-y"]{background:#C4452D}
+.actions{display:flex;flex-wrap:wrap;gap:10px;padding-top:24px;border-top:1px solid var(--line);margin-top:18px}
+button{font:600 .95rem "Figtree",sans-serif;border-radius:var(--r-field);padding:11px 18px;cursor:pointer;border:1px solid transparent}
+.primary{background:var(--accent);color:#fff;flex:1 1 100%;padding:14px;font-size:1.05rem}
+.primary:disabled{opacity:.6;cursor:progress}
+.ghost{background:none;border-color:var(--line);color:var(--ink)}
+.ghost:hover{border-color:var(--accent)}
+.result{position:sticky;top:20px;background:#0F1B27;color:#E8EEF4;border-radius:var(--r-panel);padding:32px 28px 30px;text-align:center;--safe:#5CC9A3;--risk:#FF7A5F}
+.dial{width:100%;max-width:340px;overflow:visible}
+.arc{fill:none;stroke-width:14;stroke-linecap:butt}
+#arc-base{stroke:#233546}
+.safe,.risk{stroke-dasharray:0 100;transition:stroke-dasharray .6s ease}
+.safe{stroke:var(--safe)}.risk{stroke:var(--risk)}
+.needle{transform-origin:110px 110px;transform:rotate(-90deg);transition:transform 1.2s cubic-bezier(.2,.9,.25,1.08)}
+.needle line{stroke:#E8EEF4;stroke-width:3;stroke-linecap:round}
+.needle circle{fill:#E8EEF4}
+.readout{margin-top:6px}
+.num{font:700 4.2rem/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.num small{font-size:1.6rem;margin-left:2px;color:#9FB1C2}
+.verdict{display:inline-block;margin-top:10px;padding:6px 16px;border-radius:99px;font-weight:600;background:#1E2E3E;color:#C5D2DE;transition:background .3s,color .3s}
+.verdict.low{background:rgba(92,201,163,.16);color:var(--safe)}
+.verdict.high{background:rgba(255,122,95,.16);color:var(--risk)}
+.msg{margin:18px auto 0;max-width:36ch;color:#A9BAC9;font-size:.95rem}
+.msg.error{color:#FFB4A3}
+@media (max-width:860px){.grid{grid-template-columns:1fr}.result{position:static;order:-1}}
+@media (max-width:520px){fieldset{grid-template-columns:1fr}.panel{padding:4px 18px 22px}}
+@media (prefers-reduced-motion:reduce){.needle,.safe,.risk,.seg label,.verdict{transition:none}}
